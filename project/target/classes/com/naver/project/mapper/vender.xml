@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.project.service.VenderDAO">
+	<resultMap type="com.naver.project.entities.Vender"
+		id="venderMap">
+	</resultMap>
+	
+	<resultMap type="com.naver.project.entities.VenderProduct"
+		id="venderProductMap">
+	</resultMap>
+
+	<select id="selectVenderAll" resultMap="venderMap">
+		select * from vender
+	</select>
+
+	<select id="selectUsingVendercode" parameterType="String"
+		resultType="int">
+		select count(*) from vender where vendercode=#{vendercode}
+	</select>
+
+	<insert id="insertVenderRow" parameterType="HashMap">
+		insert into vender
+		(vendercode, vendername, phone, busno, ceoname, zipcode, oldaddr,
+		newaddr, detailaddr
+		) values (
+		#{vendercode, jdbcType=VARCHAR},
+		#{vendername, jdbcType=VARCHAR},
+		#{phone, jdbcType=VARCHAR}, #{busno,
+		jdbcType=VARCHAR},
+		#{ceoname, jdbcType=VARCHAR}, #{zipcode,
+		jdbcType=VARCHAR},
+		#{oldaddr, jdbcType=VARCHAR}, #{newaddr,
+		jdbcType=VARCHAR},
+		#{detailaddr, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="selectVenderProductAll" resultMap="venderProductMap">
+		select * from venderproduct
+	</select>
+
+	<select id="selectUsingVenderProductcode" parameterType="String"
+		resultType="int">
+		select count(*) from venderproduct where venderproductcode=#{venderproductcode}
+	</select>
+
+	<insert id="insertVenderProductRow" parameterType="HashMap">
+		insert into venderproduct
+		(venderproductcode, vendercode, procode, price, memo
+		) values (
+		#{venderproductcode, jdbcType=VARCHAR},
+		#{vendercode, jdbcType=VARCHAR},
+		#{procode, jdbcType=VARCHAR}, #{price, jdbcType=INTEGER},
+		#{memo, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="selectVendername" parameterType="String" resultType="String">
+		select vendername from vender where vendercode=#{vendercode}
+	</select>
+
+</mapper>

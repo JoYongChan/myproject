@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.naver.project.service.SaleDAO">
+	<resultMap type="com.naver.project.entities.Sale"
+		id="SaleMap">
+	</resultMap>
+	<resultMap type="com.naver.project.entities.SaleNote"
+		id="SaleNoteMap">
+	</resultMap>
+	<resultMap type="com.naver.project.entities.SaleProduct"
+		id="SaleProductMap">
+	</resultMap>
+</mapper>
