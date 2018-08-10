@@ -46,7 +46,7 @@
 	</select>
 
 	<select id="selectUsingVenderProductcode" parameterType="String"
-		resultType="venderProductMap">
+		resultMap="venderProductMap">
 		select * from venderproduct where venderproductcode=#{venderproductcode}
 	</select>
 

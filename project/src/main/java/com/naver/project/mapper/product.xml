@@ -7,9 +7,6 @@
 	<resultMap type="com.naver.project.entities.Product"
 		id="productMap">
 	</resultMap>
-	<resultMap type="com.naver.project.entities.ProductBuy"
-		id="productBuyMap">
-	</resultMap>
 	<resultMap type="com.naver.project.entities.ProductStock"
 		id="productStockMap">
 	</resultMap>
