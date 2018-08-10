@@ -15,4 +15,6 @@ public interface ProductDAO {
 	Product selectOneUsingProcode(String procode);
 
 	ArrayList<ProductStock> selectProductStockAll();
+
+	int productstockInsertRow(ProductStock productstock);
 }

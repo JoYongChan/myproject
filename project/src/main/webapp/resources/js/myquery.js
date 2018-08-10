@@ -51,8 +51,8 @@ function ZipcodeFind() {
 
 			// 우편번호와 주소 정보를 해당 필드에 넣는다. //vender
 			document.getElementById('postno').value = data.zonecode; // 5자리
-																		// 새우편번호
-																		// 사용
+			// 새우편번호
+			// 사용
 			document.getElementById('newaddr').value = fullRoadAddr;
 			document.getElementById('oldaddr').value = data.jibunAddress;
 		}
@@ -60,34 +60,77 @@ function ZipcodeFind() {
 
 }
 
-$(document).ready(function() {
+$(document).ready(
+		function() {
+			$('#productstock_insert_form_save').on('click', function(){
+				var stockid = $('#productstock_insert_form_year').val()
+				+ $('#productstock_insert_form_month').val()
+				+ $('#productstock_insert_form_day').val()
+				+ $('#productstock_insert_form_procode').val();
+				$.ajax({
+					type : "POST",
+					data : "stockid=" + stockid,
+					datatype : 'json',
+					url : "productStockInsertCheck",
+					success : function(data) {
+						if(data == 1){
+							$('#productstock_insert_form').submit();
+						}
+						else{
+							$('#productstock_insert_form_myModal').modal('show');
+							$('.modal-body').text("해당 날짜의 해당 재고가 등록이 되어있습니다. 목록에서 수정을 통해 등록해주세요");
+							$('.modal_btn1').hide();
+						}
+					},
+					error : function(xr, status, error) {
+						alert("ajax error");
+					}
+				});
+			});
+			$('#productstock_insert_form_decstock').on(
+					'blur',
+					function() {
+						var stock = $('#productstock_insert_form_preddstock').val()
+								+ $('#productstock_insert_form_incstock').val()
+								- $('#productstock_insert_form_decstock').val();
+						$('#productstock_insert_form_curstock').attr("value", stock);
+					});
 
-	$('#table_confirm').on('click', function() {
-		alert('중복체크');
-	});
+			$('#productstock_insert_form_incstock').on(
+					'blur',
+					function() {
+						var stock = $('#productstock_insert_form_preddstock').val()
+								+ $('#productstock_insert_form_incstock').val()
+								- $('#productstock_insert_form_decstock').val();
+						$('#productstock_insert_form_curstock').attr("value", stock);
+					});
 
-	$('#store_confirm').on('click', function() {
-		alert('중복체크');
-	});
+			$('#table_confirm').on('click', function() {
+				alert('중복체크');
+			});
 
-	$('#ceo_confirm').on('click', function() {
-		alert('중복체크');
-	});
+			$('#store_confirm').on('click', function() {
+				alert('중복체크');
+			});
 
-	$('#table_save_btn').on('click', function() {
-		alert('테이블계정저장');
-	});
+			$('#ceo_confirm').on('click', function() {
+				alert('중복체크');
+			});
 
-	$('#store_save_btn').on('click', function() {
-		alert('매장관리자계정저장');
-	});
+			$('#table_save_btn').on('click', function() {
+				alert('테이블계정저장');
+			});
 
-	$('#cancel_btn').on('click', function() {
-		$(location).attr('href', "loginForm");
-	});
+			$('#store_save_btn').on('click', function() {
+				alert('매장관리자계정저장');
+			});
 
-	$('#logout1').on('click', function() {
-	});
-	// <!-- Bootstrap - DataTables -->
-	$('#example').DataTable();
-});
+			$('#cancel_btn').on('click', function() {
+				$(location).attr('href', "loginForm");
+			});
+
+			$('#logout1').on('click', function() {
+			});
+			// <!-- Bootstrap - DataTables -->
+			$('#example').DataTable();
+		});

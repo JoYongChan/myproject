@@ -31,12 +31,27 @@
 		#{proname, jdbcType=VARCHAR}, #{capacity, jdbcType=VARCHAR}
 		)
 	</insert>
-	
-	<select id="selectOneUsingProcode" parameterType="String" resultMap="productMap">
+
+	<select id="selectOneUsingProcode" parameterType="String"
+		resultMap="productMap">
 		select * from product where procode=#{procode}
 	</select>
-	
+
 	<select id="selectProductStockAll" resultMap="productStockMap">
-		select * from productstock
+		select * from
+		productstock
 	</select>
+
+	<insert id="productstockInsertRow" parameterType="HashMap">
+		insert into
+		productstock
+		(stockid, procode, year, month, day, preddstock, decstock,
+		incstock, curstock
+		) values (
+		#{stockid, jdbcType=VARCHAR}, #{procode, jdbcType=VARCHAR},
+		#{year, jdbcType=VARCHAR}, #{month, jdbcType=VARCHAR},
+		#{day, jdbcType=VARCHAR}, #{preddstock,	jdbcType=INTEGER},
+		#{decstock,	jdbcType=INTEGER}, #{incstock, jdbcType=INTEGER},
+		#{curstock,	jdbcType=INTEGER})
+	</insert>
 </mapper>

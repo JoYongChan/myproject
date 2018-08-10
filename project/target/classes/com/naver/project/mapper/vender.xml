@@ -10,6 +10,10 @@
 	<resultMap type="com.naver.project.entities.VenderProduct"
 		id="venderProductMap">
 	</resultMap>
+	
+	<resultMap type="com.naver.project.entities.VenderProductBuy"
+		id="venderProductBuyMap">
+	</resultMap>
 
 	<select id="selectVenderAll" resultMap="venderMap">
 		select * from vender
@@ -42,8 +46,8 @@
 	</select>
 
 	<select id="selectUsingVenderProductcode" parameterType="String"
-		resultType="int">
-		select count(*) from venderproduct where venderproductcode=#{venderproductcode}
+		resultType="venderProductMap">
+		select * from venderproduct where venderproductcode=#{venderproductcode}
 	</select>
 
 	<insert id="insertVenderProductRow" parameterType="HashMap">
@@ -59,6 +63,10 @@
 	
 	<select id="selectVendername" parameterType="String" resultType="String">
 		select vendername from vender where vendercode=#{vendercode}
+	</select>
+	
+	<select id="selectVenderProductBuyAll" resultMap="venderProductBuyMap">
+		select * from venderproductbuy
 	</select>
 
 </mapper>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.naver.project.entities.Vender;
 import com.naver.project.entities.VenderProduct;
+import com.naver.project.entities.VenderProductBuy;
 
 public interface VenderDAO {
 
@@ -17,8 +18,10 @@ public interface VenderDAO {
 	
 	int insertVenderProductRow(VenderProduct venderproduct);
 
-	int selectUsingVenderProductcode(String venderproductcode);
+	VenderProduct selectUsingVenderProductcode(String venderproductcode);
 
 	String selectVendername(String vendercode);
+
+	ArrayList<VenderProductBuy> selectVenderProductBuyAll();
 
 }

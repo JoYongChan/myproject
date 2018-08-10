@@ -30,7 +30,8 @@
 						<th scope="col">재고이름</th>
 						<th scope="col">단위</th>
 						<th scope="col">전일재고</th>
-						<th scope="col">변동량</th>
+						<th scope="col">증가량</th>
+						<th scope="col">감소량</th>
 						<th scope="col">현재재고</th>
 					</tr>
 				</thead>
@@ -39,7 +40,7 @@
 						varStatus="status">
 						<tr>
 							<td style="text-align: center; vertical-align: middle;"><a
-								href="productUpdateForm?procode=${product.procode}">
+								href="productUpdateForm?seq=${productstock.seq}">
 									${productstock.date}</a></td>
 							<td style="text-align: center; vertical-align: middle;">
 								${productstock.proname}</td>
@@ -48,7 +49,9 @@
 							<td style="text-align: center; vertical-align: middle;">
 								${productstock.preddstock}</td>
 							<td style="text-align: center; vertical-align: middle;">
-								${productstock.changestock}</td>
+								${productstock.incstock}</td>
+							<td style="text-align: center; vertical-align: middle;">
+								${productstock.decstock}</td>
 							<td style="text-align: center; vertical-align: middle;">
 								${productstock.curstock}</td>
 						</tr>
@@ -59,7 +62,7 @@
 				<div>
 					<button class="btn btn-primary" type="button"
 						id="vender_list_addBtn"
-						onclick="location.href='productInsertForm'">재고물품 추가</button>
+						onclick="location.href='productStockInsertForm'">재고물품 추가</button>
 				</div>
 			</div>
 		</div>

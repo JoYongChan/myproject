@@ -1,6 +1,8 @@
 package com.naver.project;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import com.naver.project.service.ProductDAO;
 public class ProductController {
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private ProductStock productstock;
 
 	@RequestMapping(value = "/productStockList", method = RequestMethod.GET)
 	public String productStockList(Model model) {
@@ -38,11 +43,45 @@ public class ProductController {
 
 	@RequestMapping(value = "/productStockInsertForm", method = RequestMethod.GET)
 	public String productStockInsertForm(Model model) {
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		ArrayList<Product> products = dao.selectProductAll();
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		productstock.setYear(date.substring(0, 4));
+		productstock.setMonth(date.substring(5, 7));
+		productstock.setDay(date.substring(8, 10));
+		model.addAttribute("productstock", productstock);
+		model.addAttribute("products", products);
 		return "product/productstock_insert_form";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/productStockInsertCheck", method = RequestMethod.POST)
+	public int productStockInsertCheck(@RequestParam String stockid) {
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		ArrayList<ProductStock> productstocks = dao.selectProductStockAll();
+		int check = 1;
+		for(ProductStock productstock : productstocks) {
+			if(productstock.getStockid().equals(stockid)){
+				check = 0;
+			}
+		}
+		return check;
+	}
 
-	@RequestMapping(value = "/productStockInsert", method = RequestMethod.GET)
-	public String productStockInsert(Model model) {
+	@RequestMapping(value = "/productStockInsert", method = RequestMethod.POST)
+	public String productStockInsert(Model model, @ModelAttribute ProductStock productstock) {
+		productstock.setStockid(productstock.getYear() + productstock.getMonth()
+		+ productstock.getDay() + productstock.getProcode());
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		int result = 0;
+		try {
+			result = dao.productstockInsertRow(productstock);
+			System.out.println("productStockInsert result : " + result);
+		}
+		catch(Exception e) {
+			System.out.println("productStockInsert error : " + e.getMessage());
+		}
 		return "redirect:productStockList";
 	}
 
@@ -59,36 +98,6 @@ public class ProductController {
 	@RequestMapping(value = "/productStockDelete", method = RequestMethod.GET)
 	public String productStockDelete(Model model) {
 		return "redirect:productStockList";
-	}
-
-	@RequestMapping(value = "/productBuyList", method = RequestMethod.GET)
-	public String productBuyList(Model model) {
-		return "product/productbuy_list";
-	}
-
-	@RequestMapping(value = "/productBuyInsertForm", method = RequestMethod.GET)
-	public String productBuyInsertForm(Model model) {
-		return "product/productbuy_insert_form";
-	}
-
-	@RequestMapping(value = "/productBuyInsert", method = RequestMethod.GET)
-	public String productBuyInsert(Model model) {
-		return "redirect:productBuyList";
-	}
-
-	@RequestMapping(value = "/productBuyUpdateForm", method = RequestMethod.GET)
-	public String productBuyUpdateForm(Model model) {
-		return "product/productbuy_update_form";
-	}
-
-	@RequestMapping(value = "/productBuyUpdate", method = RequestMethod.GET)
-	public String productBuyUpdate(Model model) {
-		return "redirect:productBuyList";
-	}
-
-	@RequestMapping(value = "/productBuyDelete", method = RequestMethod.GET)
-	public String productBuyDelete(Model model) {
-		return "redirect:productBuyList";
 	}
 
 	@RequestMapping(value = "/productList", method = RequestMethod.GET)
