@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- 각 필드들의 id로 지정된 것들은 jQuery와 JavaScript에서 인식하는데에 사용 -->
-	<!-- 컨트롤러에서는 name으로 매칭해서 사용 -->
 	<form id="vender_insert_form" name="vender_insert_form" method="post"
 		action="venderInsert" data-parsley-validate="true">
 		<input type="hidden" id="vender_insert_form_confirm_yn" value="n">
@@ -23,7 +21,6 @@
 							class="fas fa-envelope" style="font-size: 10"> 거래처 코드</i>
 						</span>
 					</div>
-					<!-- ime-mode는 입력제어 disabled일 경우 영어와 숫자만 입력 -->
 					<input type="text" id="vender_insert_form_vendercode" name="vendercode"
 						maxlength="4" onkeydown="onlyNumber(event)"
 						onkeyup="removeChar(event)" style="ime-mode: disabled;"
@@ -90,7 +87,7 @@
 						aria-label="busno3" aria-describedby="basic-addon1" maxlength="5"
 						style="width: 20%" required="true" onkeydown="onlyNumber(event)"
 						onkeyup="removeChar(event)"
-						data-parsley-error-message="전화번호 가운데 숫자들을 입력하세요!"
+						data-parsley-error-message="사업자번호 마지막 숫자들을 입력하세요!"
 						data-parsley-errors-container="div[id='vender_insert_form_busnoError']"
 						data-parsley-type="number">
 				</div>
@@ -273,7 +270,7 @@
 				<button type="submit" id="vender_insert_form_save"
 					class="col-md-1 btn btn-primary"
 					style="font-align: center; margin: 3px">저장</button>
-				<button type="button" class="col-md-1 btn btn-primary"
+				<button type="button" class="col-md-1 btn btn-warning"
 					id="vender_insert_form_cancel"
 					style="font-align: center; margin: 3px"
 					onclick="location.href='venderList'">취소</button>

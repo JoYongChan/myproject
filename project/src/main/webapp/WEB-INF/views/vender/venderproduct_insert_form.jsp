@@ -8,14 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- 각 필드들의 id로 지정된 것들은 jQuery와 JavaScript에서 인식하는데에 사용 -->
-	<!-- 컨트롤러에서는 name으로 매칭해서 사용 -->
 	<form id="venderproduct_insert_form" name="venderproduct_insert_form"
 		method="post" action="venderproductInsert"
 		data-parsley-validate="true">
 		<input type="hidden" id="venderproduct_insert_form_confirm_yn"
 			value="n">
-		<h1 style="text-align: center">거래처 등록</h1>
+		<h1 style="text-align: center">거래처물품 등록</h1>
 
 		<div class="container">
 			<div class="row">
@@ -26,7 +24,6 @@
 							class="fas fa-envelope" style="font-size: 10"> 거래처상품 코드</i>
 						</span>
 					</div>
-					<!-- ime-mode는 입력제어 disabled일 경우 영어와 숫자만 입력 -->
 					<input type="text" id="venderproduct_insert_form_venderproductcode"
 						name="venderproductcode" maxlength="4"
 						onkeydown="onlyNumber(event)" onkeyup="removeChar(event)"
@@ -119,24 +116,19 @@
 
 			<div class="row">
 				<div class="col-md-5"></div>
-				<!-- submit을 type으로 지정하지 않고 버튼에 클릭에 따른 동작을 위의 Script에서 지정해서
-				submit 동작을 실행 -->
 				<button type="submit" id="venderproduct_insert_form_save"
 					class="col-md-1 btn btn-primary"
 					style="font-align: center; margin: 3px">저장</button>
-				<button type="button" class="col-md-1 btn btn-primary"
+				<button type="button" class="col-md-1 btn btn-warning"
 					id="venderproduct_insert_form_cancel"
 					style="font-align: center; margin: 3px"
 					onclick="location.href='venderList'">취소</button>
 				<div class="col-md-5"></div>
 			</div>
 
-			<!-- Modal -->
 			<div id="venderproduct_insert_form_myModal" class="modal fade"
 				role="dialog">
 				<div class="modal-dialog">
-
-					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close " data-dismiss="modal">&times;</button>

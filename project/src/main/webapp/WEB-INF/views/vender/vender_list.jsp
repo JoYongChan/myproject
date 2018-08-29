@@ -43,7 +43,7 @@
 							<td style="text-align: center; vertical-align: middle;">
 								${vender.vendercode}</td>
 							<td style="text-align: center; vertical-align: middle;"><a
-								href="venderUpdateForm?code=${vender.vendercode}"> ${vender.vendername}</a></td>
+								href="venderUpdateForm?vendercode=${vender.vendercode}"> ${vender.vendername}</a></td>
 							<td style="text-align: center; vertical-align: middle;">
 								${vender.busno}</td>
 							<td style="text-align: center; vertical-align: middle;">

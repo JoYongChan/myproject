@@ -1,74 +1,33 @@
 package com.naver.project;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.naver.project.entities.SaleProduct;
+import com.naver.project.service.SaleDAO;
 
 @Controller
 public class SaleController {
-	@RequestMapping(value = "/saleList", method = RequestMethod.GET)
-	public String saleList(Model model) {
-		return "sale/sale_list";
-	}
-
-	@RequestMapping(value = "/saleInsertForm", method = RequestMethod.GET)
-	public String saleInsertForm(Model model) {
-		return "sale/sale_insert_form";
-	}
+	@Autowired
+	private SqlSession sqlSession;
 	
-	@RequestMapping(value = "/saleInsert", method = RequestMethod.GET)
-	public String saleInsert(Model model) {
-		return "redirect:saleList";
-	}
+	@Autowired
+	private SaleProduct saleproduct;
 	
-	@RequestMapping(value = "/saleUpdateForm", method = RequestMethod.GET)
-	public String saleUpdateForm(Model model) {
-		return "sale/sale_update_form";
-	}
-	
-	@RequestMapping(value = "/saleUpdate", method = RequestMethod.GET)
-	public String saleUpdate(Model model) {
-		return "redirect:saleList";
-	}
-	
-	@RequestMapping(value = "/saleDelete", method = RequestMethod.GET)
-	public String saleDelete(Model model) {
-		return "redirect:saleList";
-	}
-
-	@RequestMapping(value = "/salenoteList", method = RequestMethod.GET)
-	public String salenoteList(Model model) {
-		return "sale/salenote_list";
-	}
-
-	@RequestMapping(value = "/salenoteInsertForm", method = RequestMethod.GET)
-	public String salenoteInsertForm(Model model) {
-		return "sale/salenote_insert_form";
-	}
-	
-	@RequestMapping(value = "/salenoteInsert", method = RequestMethod.GET)
-	public String salenoteInsert(Model model) {
-		return "redirect:salenoteList";
-	}
-	
-	@RequestMapping(value = "/salenoteUpdateForm", method = RequestMethod.GET)
-	public String salenoteUpdateForm(Model model) {
-		return "sale/salenote_update_form";
-	}
-	
-	@RequestMapping(value = "/salenoteUpdate", method = RequestMethod.GET)
-	public String salenoteUpdate(Model model) {
-		return "redirect:salenoteList";
-	}
-	
-	@RequestMapping(value = "/salenoteDelete", method = RequestMethod.GET)
-	public String salenoteDelete(Model model) {
-		return "redirect:salenoteList";
-	}
-
+//	-----------------------------------------------------------------
 	@RequestMapping(value = "/saleproductList", method = RequestMethod.GET)
 	public String saleproductList(Model model) {
+		SaleDAO dao = sqlSession.getMapper(SaleDAO.class);
+		ArrayList<SaleProduct> saleproducts = dao.selectSaleProductAll();
+		model.addAttribute("saleproducts", saleproducts);
 		return "sale/saleproduct_list";
 	}
 
@@ -77,23 +36,47 @@ public class SaleController {
 		return "sale/saleproduct_insert_form";
 	}
 	
-	@RequestMapping(value = "/saleproductInsert", method = RequestMethod.GET)
-	public String saleproductInsert(Model model) {
+	@RequestMapping(value = "/saleproductInsert", method = RequestMethod.POST)
+	public String saleproductInsert(@ModelAttribute SaleProduct saleproduct) {
+		SaleDAO dao = sqlSession.getMapper(SaleDAO.class);
+		try {
+			dao.insertSaleProductRow(saleproduct);
+		}
+		catch(Exception e) {
+			System.out.println("saleproductInsert error : " + e.getMessage());
+		}
 		return "redirect:saleproductList";
 	}
 	
 	@RequestMapping(value = "/saleproductUpdateForm", method = RequestMethod.GET)
-	public String saleproductUpdateForm(Model model) {
+	public String saleproductUpdateForm(Model model, @RequestParam String saleprocode) {
+		SaleDAO dao = sqlSession.getMapper(SaleDAO.class);
+		SaleProduct saleproduct = dao.selectSaleProductRow(saleprocode);
+		model.addAttribute("saleproduct", saleproduct);
 		return "sale/saleproduct_update_form";
 	}
 	
-	@RequestMapping(value = "/saleproductUpdate", method = RequestMethod.GET)
-	public String saleproductUpdate(Model model) {
+	@RequestMapping(value = "/saleproductUpdate", method = RequestMethod.POST)
+	public String saleproductUpdate(@ModelAttribute SaleProduct saleproduct) {
+		SaleDAO dao = sqlSession.getMapper(SaleDAO.class);
+		try {
+			dao.updateSaleProductRow(saleproduct);
+		}
+		catch(Exception e) {
+			System.out.println("saleproductUpdate error : " + e.getMessage());
+		}
 		return "redirect:saleproductList";
 	}
 	
 	@RequestMapping(value = "/saleproductDelete", method = RequestMethod.GET)
-	public String saleproductDelete(Model model) {
+	public String saleproductDelete(@RequestParam String saleprocode) {
+		SaleDAO dao = sqlSession.getMapper(SaleDAO.class);
+		try {
+			dao.deleteSaleProductRow(saleprocode);
+		}
+		catch(Exception e){
+			System.out.println("saleproductDelete error : " + e.getMessage());
+		}
 		return "redirect:saleproductList";
 	}
 }

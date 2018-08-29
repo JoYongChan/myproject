@@ -53,7 +53,7 @@
 			<div class="row">
 				<div>
 					<button class="btn btn-primary" type="button"
-						id="vender_list_addBtn" onclick="location.href='venderproductInsertForm'">거래처물품 추가</button>
+						id="venderproduct_list_addBtn" onclick="location.href='venderproductInsertForm'">거래처물품 추가</button>
 				</div>
 			</div>
 		</div>

@@ -25,6 +25,26 @@ public class ProductController {
 	
 	@Autowired
 	private ProductStock productstock;
+	
+
+	private void productStockInsert(String procode) {
+		// TODO Auto-generated method stub
+		productstock.setProcode(procode);
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		productstock.setYear(date.substring(0, 4));
+		productstock.setMonth(date.substring(5, 7));
+		productstock.setDay(date.substring(8, 10));
+		productstock.setStockid(productstock.getYear() + productstock.getMonth()
+		+ productstock.getDay() + procode);
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		try {
+			dao.productstockInsertRow(productstock);
+		}
+		catch(Exception e) {
+			System.out.println("productStockInsert error : " + e.getMessage());
+		}
+	}
 
 	@RequestMapping(value = "/productStockList", method = RequestMethod.GET)
 	public String productStockList(Model model) {
@@ -41,57 +61,30 @@ public class ProductController {
 		return "product/productstock_list";
 	}
 
-	@RequestMapping(value = "/productStockInsertForm", method = RequestMethod.GET)
-	public String productStockInsertForm(Model model) {
-		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
-		ArrayList<Product> products = dao.selectProductAll();
-		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
-		String date = sm.format(new Date());
-		productstock.setYear(date.substring(0, 4));
-		productstock.setMonth(date.substring(5, 7));
-		productstock.setDay(date.substring(8, 10));
-		model.addAttribute("productstock", productstock);
-		model.addAttribute("products", products);
-		return "product/productstock_insert_form";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/productStockInsertCheck", method = RequestMethod.POST)
-	public int productStockInsertCheck(@RequestParam String stockid) {
-		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
-		ArrayList<ProductStock> productstocks = dao.selectProductStockAll();
-		int check = 1;
-		for(ProductStock productstock : productstocks) {
-			if(productstock.getStockid().equals(stockid)){
-				check = 0;
-			}
-		}
-		return check;
-	}
-
-	@RequestMapping(value = "/productStockInsert", method = RequestMethod.POST)
-	public String productStockInsert(Model model, @ModelAttribute ProductStock productstock) {
-		productstock.setStockid(productstock.getYear() + productstock.getMonth()
-		+ productstock.getDay() + productstock.getProcode());
-		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
-		int result = 0;
-		try {
-			result = dao.productstockInsertRow(productstock);
-			System.out.println("productStockInsert result : " + result);
-		}
-		catch(Exception e) {
-			System.out.println("productStockInsert error : " + e.getMessage());
-		}
-		return "redirect:productStockList";
-	}
-
 	@RequestMapping(value = "/productStockUpdateForm", method = RequestMethod.GET)
-	public String productStockUpdateForm(Model model) {
+	public String productStockUpdateForm(Model model, @RequestParam String stockid) {
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		ProductStock productstock = dao.selectProductStockOne(stockid);
+		Product product = dao.selectOneUsingProcode(productstock.getProcode());
+		productstock.setProname(product.getProname());
+		productstock.setCapacity(product.getCapacity());
+		System.out.println("productStockUpdateForm stockid : " + productstock.getStockid());
+		System.out.println("productStockUpdateForm curstock : " + productstock.getCurstock());
+		model.addAttribute("productstock", productstock);
 		return "product/productstock_update_form";
 	}
 
-	@RequestMapping(value = "/productStockUpdate", method = RequestMethod.GET)
-	public String productStockUpdate(Model model) {
+	@RequestMapping(value = "/productStockUpdate", method = RequestMethod.POST)
+	public String productStockUpdate(Model model, @ModelAttribute ProductStock productstock) {
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		System.out.println("productStockUpdate stockid : " + productstock.getStockid());
+		System.out.println("productStockUpdate curstock : " + productstock.getCurstock());
+		try {
+			dao.updateProductStockRow(productstock);
+		}
+		catch(Exception e) {
+			System.out.println("productStockUpdate error + " + e.getMessage());
+		}
 		return "redirect:productStockList";
 	}
 
@@ -116,44 +109,58 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value = "/productConfirm", method = RequestMethod.POST)
 	public int productConfirm(@RequestParam String procode) {
-		System.out.println("productConfirm code : " + procode);
 		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
 		int exists = 0;
 		try {
 			exists = dao.selectUsingProcode(procode);
-			System.out.println("productConfirm exists : " + exists);
 		} catch (Exception e) {
-			System.out.println("confirm error : " + e.getMessage());
+			System.out.println("productconfirm error : " + e.getMessage());
 		}
 		return exists;
 	}
 
 	@RequestMapping(value = "/productInsert", method = RequestMethod.POST)
 	public String productInsert(Model model, @ModelAttribute Product product) {
-		System.out.println("productInsert productcode : " + product.getProcode());
 		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
-		int result = 0;
 		try {
-			result = dao.productInsertRow(product);
-			System.out.println("productInsert result : " + result);
+			dao.productInsertRow(product);
+			productStockInsert(product.getProcode());
 		} catch (Exception e) {
 			System.out.println("productInsert error : " + e.getMessage());
 		}
 		return "redirect:productList";
 	}
 
+
 	@RequestMapping(value = "/productUpdateForm", method = RequestMethod.GET)
-	public String productUpdateForm(Model model) {
+	public String productUpdateForm(Model model, @RequestParam String procode) {
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		Product product = dao.selectOneUsingProcode(procode);
+		model.addAttribute("product", product);
 		return "product/product_update_form";
 	}
 
-	@RequestMapping(value = "/productUpdate", method = RequestMethod.GET)
-	public String productUpdate(Model model) {
+	@RequestMapping(value = "/productUpdate", method = RequestMethod.POST)
+	public String productUpdate(Model model, @ModelAttribute Product product) {
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		try {
+			dao.productUpdateRow(product);
+		}
+		catch(Exception e) {
+			System.out.println("productUpdate error : " + e.getMessage());
+		}
 		return "redirect:productList";
 	}
 
 	@RequestMapping(value = "/productDelete", method = RequestMethod.GET)
-	public String productDelete(Model model) {
+	public String productDelete(Model model, @RequestParam String procode) {
+		ProductDAO dao = sqlSession.getMapper(ProductDAO.class);
+		try {
+			dao.productDeleteRow(procode);
+		}
+		catch(Exception e) {
+			System.out.println("productDelete error : " + e.getMessage());
+		}
 		return "redirect:productList";
 	}
 }

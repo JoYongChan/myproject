@@ -2,15 +2,44 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- <mapper namespace="com.naver.project.service.SaleDAO">
-	<resultMap type="com.naver.project.entities.Sale"
-		id="SaleMap">
-	</resultMap>
-	<resultMap type="com.naver.project.entities.SaleNote"
-		id="SaleNoteMap">
-	</resultMap>
+
+<mapper namespace="com.naver.project.service.SaleDAO">
 	<resultMap type="com.naver.project.entities.SaleProduct"
 		id="SaleProductMap">
 	</resultMap>
+
+	<select id="selectSaleProductAll" resultMap="SaleProductMap">
+		select * from
+		saleproduct
+	</select>
+
+	<insert id="insertSaleProductRow" parameterType="HashMap">
+		insert into
+		saleproduct
+		(saleprocode, saleproname, saleproprice, saleprocapacity,
+		memo
+		) values (
+		#{saleprocode, jdbcType=VARCHAR}, #{saleproname,
+		jdbcType=VARCHAR},
+		#{saleproprice, jdbcType=VARCHAR},
+		#{saleprocapacity, jdbcType=INTEGER},
+		#{memo, jdbcType=VARCHAR})
+	</insert>
+
+	<select id="selectSaleProductRow" parameterType="String"
+		resultMap="SaleProductMap">
+		select * from saleproduct where saleprocode=#{saleprocode}
+	</select>
+
+	<update id="updateSaleProductRow" parameterType="HashMap">
+		update
+		saleproduct set
+		saleproname=#{saleproname},
+		saleproprice=#{saleproprice}, saleprocapacity=#{saleprocapacity},
+		memo=#{memo} where saleprocode=#{saleprocode}
+	</update>
+	
+	<delete id="deleteSaleProductRow" parameterType="String">
+		delete from saleproduct where saleprocode=#{saleprocode}
+	</delete>
 </mapper>

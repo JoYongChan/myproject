@@ -48,7 +48,7 @@
 			<div class="row">
 				<div>
 					<button class="btn btn-primary" type="button"
-						id="vender_list_addBtn" onclick="location.href='productInsertForm'">재고물품 추가</button>
+						id="product_list_addBtn" onclick="location.href='productInsertForm'">재고물품 추가</button>
 				</div>
 			</div>
 		</div>

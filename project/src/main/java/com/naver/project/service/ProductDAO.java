@@ -10,11 +10,33 @@ public interface ProductDAO {
 	
 	int selectUsingProcode(String procode);
 	
-	int productInsertRow(Product product);
+	void productInsertRow(Product product);
+	
+	void productUpdateRow(Product product);
+
+	void productDeleteRow(String procode);
 	
 	Product selectOneUsingProcode(String procode);
 
 	ArrayList<ProductStock> selectProductStockAll();
 
-	int productstockInsertRow(ProductStock productstock);
+	void productstockInsertRow(ProductStock productstock);
+
+	int selectCurStockUsingStockid(String stockid);
+
+	void addProductStock(ProductStock productstock);
+
+	void close(ProductStock productstock);
+
+	ProductStock selectProductStockOne(String stockid);
+
+	void productstockDeleteRow(String stockid);
+
+	void updateProductStockRow(ProductStock productstock);
+
+	ProductStock selectLastProductStock(String procode);
+
+	void updateProductStock(ProductStock productstock);
+
+	
 }

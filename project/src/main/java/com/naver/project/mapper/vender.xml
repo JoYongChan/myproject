@@ -41,6 +41,17 @@
 		)
 	</insert>
 	
+	<update id="updateVenderRow" parameterType="HashMap">
+		update vender set
+		vendername=#{vendername}, phone=#{phone}, busno=#{busno}, ceoname=#{ceoname},
+		zipcode=#{zipcode}, oldaddr=#{oldaddr}, newaddr=#{newaddr}, detailaddr=#{detailaddr} 
+		where vendercode=#{vendercode}
+	</update>
+	
+	<delete id="deleteVenderRow" parameterType="String">
+		delete from vender where vendercode=#{vendercode}
+	</delete>
+	
 	<select id="selectVenderProductAll" resultMap="venderProductMap">
 		select * from venderproduct
 	</select>
@@ -69,4 +80,95 @@
 		select * from venderproductbuy
 	</select>
 
+	<select id="selectSequenceNo" parameterType="hashMap"
+		resultType="Integer">
+		select ifnull(max(no)+1,1) from venderproductbuy where
+		venderproductcode=#{venderproductcode} and
+		year=#{year} and month=#{month} and day=#{day}
+	</select>
+	
+	<select id="selectVenderProduct" parameterType="String"
+		resultMap="venderProductMap">
+		select * from venderproduct where vendercode=#{vendercode}
+	</select>
+	
+	<insert id="insertVenderProductBuyRow" parameterType="HashMap">
+		insert into venderproductbuy
+		(buyid, venderproductcode, year, month, day, no, hang, qty, totalprice, memo
+		) values (
+		(select ifnull(max(buyid)+1,1) from venderproductbuy alias_venderproductbuy),
+		#{venderproductcode, jdbcType=VARCHAR}, #{year, jdbcType=VARCHAR},
+		#{month, jdbcType=VARCHAR}, #{day, jdbcType=VARCHAR},
+		#{no, jdbcType=INTEGER}, #{hang, jdbcType=INTEGER},
+		#{qty, jdbcType=INTEGER}, #{totalprice, jdbcType=INTEGER},
+		#{memo, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="updateVenderProductRow" parameterType="HashMap">
+		update venderproduct set
+		price=#{price}, memo=#{memo}
+		where venderproductcode=#{venderproductcode}
+	</update>
+	
+	<delete id="deleteVenderProduct" parameterType="String">
+		delete from venderproduct where venderproductcode=#{venderproductcode}
+	</delete>
+	
+	<select id="selectBuySearchRollup" parameterType="HashMap"
+		resultMap="venderProductBuyMap">
+		select buyid, year, month, day, no, hang, B.vendercode vendercode,
+		B.procode procode, A.venderproductcode venderproductcode, sum(qty) qty, sum(totalprice) totalprice
+		from venderproductbuy A, venderproduct B
+		where
+		A.venderproductcode=#{venderproductcode} and
+		year=#{year} and month=#{month} and day=#{day} and
+		A.venderproductcode=B.venderproductcode
+		group by no, hang WITH ROllUP
+	</select>
+	
+	<select id="selectBuySearchRollupMM" parameterType="hashMap"
+		resultMap="venderProductBuyMap">
+		select buyid, year, month, day, no, hang, B.vendercode vendercode,
+		B.procode procode, A.venderproductcode venderproductcode, sum(qty) qty, sum(totalprice) totalprice
+		from venderproductbuy A, venderproduct B
+		where
+		A.venderproductcode=#{venderproductcode} and
+		year=#{year} and month=#{month} and
+		A.venderproductcode=B.venderproductcode
+		group by month, day, no, hang WITH ROllUP
+	</select>
+
+	<select id="selectBuySearchRollupYY" parameterType="hashMap"
+		resultMap="venderProductBuyMap">
+		select buyid, year, month, day, no, hang, B.vendercode vendercode,
+		B.procode procode, A.venderproductcode venderproductcode, sum(qty) qty, sum(totalprice) totalprice
+		from venderproductbuy A, venderproduct B
+		where
+		A.venderproductcode=#{venderproductcode} and
+		year=#{year} and
+		A.venderproductcode=B.venderproductcode
+		group by year, month, day, no, hang WITH ROllUP
+	</select>
+	
+	<select id="selectVenderUsingVendercode" parameterType="String"
+		resultMap="venderMap">
+		select * from vender where vendercode=#{vendercode}
+	</select>
+	
+	<select id="selectVenderproductbuyOne" parameterType="int"
+		resultMap="venderProductBuyMap">
+		select * from venderproductbuy where buyid=#{buyid}
+	</select>
+	
+	<update id="updateVenderProductBuyRow" parameterType="HashMap">
+		update venderproductbuy set 
+		qty=#{qty}, totalprice=#{totalprice}, memo=#{memo}
+		where buyid=#{buyid}
+	</update>
+	
+	<delete id="deleteVenderProductBuy" parameterType="int">
+		delete from venderproductbuy where buyid=#{buyid}
+	</delete>
+	
 </mapper>

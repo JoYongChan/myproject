@@ -40,7 +40,7 @@
 						varStatus="status">
 						<tr>
 							<td style="text-align: center; vertical-align: middle;"><a
-								href="productUpdateForm?seq=${productstock.seq}">
+								href="productStockUpdateForm?stockid=${productstock.stockid}">
 									${productstock.date}</a></td>
 							<td style="text-align: center; vertical-align: middle;">
 								${productstock.proname}</td>
@@ -61,7 +61,7 @@
 			<div class="row">
 				<div>
 					<button class="btn btn-primary" type="button"
-						id="vender_list_addBtn"
+						id="productstock_list_addBtn"
 						onclick="location.href='productStockInsertForm'">재고물품 추가</button>
 				</div>
 			</div>

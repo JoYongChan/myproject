@@ -29,6 +29,17 @@
 		)
 	</insert>
 
+	<update id="productUpdateRow" parameterType="HashMap">
+		update product set
+		proname=#{proname}, capacity=#{capacity}
+		where procode=#{procode}
+	</update>
+
+	<delete id="productDeleteRow" parameterType="String">
+		delete from product
+		where procode=#{procode}
+	</delete>
+
 	<select id="selectOneUsingProcode" parameterType="String"
 		resultMap="productMap">
 		select * from product where procode=#{procode}
@@ -45,10 +56,66 @@
 		(stockid, procode, year, month, day, preddstock, decstock,
 		incstock, curstock
 		) values (
-		#{stockid, jdbcType=VARCHAR}, #{procode, jdbcType=VARCHAR},
-		#{year, jdbcType=VARCHAR}, #{month, jdbcType=VARCHAR},
-		#{day, jdbcType=VARCHAR}, #{preddstock,	jdbcType=INTEGER},
-		#{decstock,	jdbcType=INTEGER}, #{incstock, jdbcType=INTEGER},
-		#{curstock,	jdbcType=INTEGER})
+		#{stockid, jdbcType=VARCHAR}, #{procode,
+		jdbcType=VARCHAR},
+		#{year, jdbcType=VARCHAR}, #{month,
+		jdbcType=VARCHAR},
+		#{day, jdbcType=VARCHAR}, #{preddstock,
+		jdbcType=INTEGER},
+		#{decstock, jdbcType=INTEGER}, #{incstock,
+		jdbcType=INTEGER},
+		#{curstock, jdbcType=INTEGER})
 	</insert>
+
+	<select id="selectProductStockOne" parameterType="String"
+		resultMap="productStockMap">
+		select * from productstock where stockid=#{stockid}
+	</select>
+
+	<select id="selectCurStockUsingStockid" parameterType="String"
+		resultType="int">
+		select curstock from productstock where stockid=#{stockid}
+	</select>
+
+	<insert id="addProductStock" parameterType="HashMap">
+		insert into
+		productstock(stockid, procode, year, month, day, preddstock, decstock,
+		incstock, curstock)
+		values(#{stockid, jdbcType=VARCHAR}, #{procode,
+		jdbcType=VARCHAR}, #{year, jdbcType=VARCHAR},
+		#{month,
+		jdbcType=VARCHAR}, #{day, jdbcType=VARCHAR}, #{preddstock,
+		jdbcType=VARCHAR}, 0, #{incstock, jdbcType=VARCHAR},
+		#{curstock,	jdbcType=VARCHAR})
+		ON DUPLICATE KEY
+		update
+		curstock = curstock + #{incstock}, incstock = incstock + #{incstock}
+	</insert>
+
+	<delete id="productstockDeleteRow" parameterType="String">
+		delete from
+		productstock where stockid=#{stockid}
+	</delete>
+
+	<update id="updateProductStockRow" parameterType="HashMap">
+		update
+		productstock set
+		decstock=decstock + #{decstock}, incstock=incstock +
+		#{incstock}, curstock=#{curstock}
+		where stockid=#{stockid}
+	</update>
+
+	<select id="selectLastProductStock" parameterType="String"
+		resultMap="productStockMap">
+		select * from productstock
+		where
+		stockid=(select max(stockid)
+		from productstock where procode=#{procode})
+	</select>
+	
+	<update id="updateProductStock" parameterType="HashMap">
+		update productstock set
+		incstock = incstock + #{incstock}, curstock = curstock + #{incstock}
+		where stockid=#{stockid}
+	</update>
 </mapper>
