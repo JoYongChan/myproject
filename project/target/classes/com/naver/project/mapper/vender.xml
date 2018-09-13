@@ -23,6 +23,11 @@
 		resultType="int">
 		select count(*) from vender where vendercode=#{vendercode}
 	</select>
+	
+	<select id="selectUsingVenderproductcode" parameterType="String"
+		resultType="int">
+		select count(*) from venderproduct where venderproductcode=#{venderproductcode}
+	</select>
 
 	<insert id="insertVenderRow" parameterType="HashMap">
 		insert into vender

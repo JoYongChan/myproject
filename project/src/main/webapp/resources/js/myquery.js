@@ -109,6 +109,110 @@ function selectedBuyid(buyid) {
 
 $(document).ready(
 		function() {
+			$('#venderproduct_insert_form_save').on('click', function(){
+				var confirm = $('#venderproduct_insert_form_confirm_yn').val();
+				if(confirm == 'y'){
+					$('#venderproduct_insert_form').submit();
+				}
+				else{
+					$('#venderproduct_insert_form_myModal').modal('show');
+					$('.modal-body').text("코드 중복검사를 실행해주세요.");
+					$('.modal_btn1').hide();
+				}
+			});
+			
+			$('#venderproduct_insert_form_confirm').on('click', function(){
+				var venderproductcode = $('#venderproduct_insert_form_venderproductcode').val();
+				if(venderproductcode == ''){
+					$('#venderproduct_insert_form_myModal').modal('show');
+					$('.modal-body').text("코드를 입력해주세요.");
+					$('.modal_btn1').hide();
+					$('#venderproduct_insert_form_confirm_yn').val('n');
+				}
+				else{
+					$.ajax({
+						type : "POST",
+						data : "venderproductcode=" + venderproductcode,
+						datatype : 'json',
+						url : "venderProductConfirm",
+						success : function(data) {
+							if(data == 0){
+								$('#venderproduct_insert_form_myModal').modal('show');
+								$('.modal-body').text("해당 코드 사용가능");
+								$('.modal_btn1').text("사용");
+								$('.modal_btn1').show();
+								$('.modal_btn2').text("취소");
+								$('.modal_btn2').on('click', function(){
+									$('#venderproduct_insert_form_venderproductcode').val('');
+								});
+								$('#venderproduct_insert_form_confirm_yn').val('y');
+							}
+							else{
+								$('#venderproduct_insert_form_myModal').modal('show');
+								$('.modal-body').text("중복된 코드가 존재합니다.");
+								$('.modal_btn1').hide();
+								$('#venderproduct_insert_form_confirm_yn').val('n');
+							}
+						},
+						error : function(xr, status, error) {
+							alert("ajax error");
+						}
+					});
+				}
+			});
+			
+			$('#vender_insert_form_save').on('click', function(){
+				var confirm = $('#vender_insert_form_confirm_yn').val();
+				if(confirm == 'y'){
+					$('#vender_insert_form').submit();
+				}
+				else{
+					$('#vender_insert_form_myModal').modal('show');
+					$('.modal-body').text("코드 중복검사를 실행해주세요.");
+					$('.modal_btn1').hide();
+				}
+			});
+			
+			$('#vender_insert_form_confirm').on('click', function(){
+				var vendercode = $('#vender_insert_form_vendercode').val();
+				if(vendercode == ''){
+					$('#vender_insert_form_myModal').modal('show');
+					$('.modal-body').text("코드를 입력해주세요.");
+					$('.modal_btn1').hide();
+					$('#vender_insert_form_confirm_yn').val('n');
+				}
+				else{
+					$.ajax({
+						type : "POST",
+						data : "vendercode=" + vendercode,
+						datatype : 'json',
+						url : "venderConfirm",
+						success : function(data) {
+							if(data == 0){
+								$('#vender_insert_form_myModal').modal('show');
+								$('.modal-body').text("해당 코드 사용가능");
+								$('.modal_btn1').text("사용");
+								$('.modal_btn1').show();
+								$('.modal_btn2').text("취소");
+								$('.modal_btn2').on('click', function(){
+									$('#vender_insert_form_vendercode').val('');
+								});
+								$('#vender_insert_form_confirm_yn').val('y');
+							}
+							else{
+								$('#vender_insert_form_myModal').modal('show');
+								$('.modal-body').text("중복된 코드가 존재합니다.");
+								$('.modal_btn1').hide();
+								$('#vender_insert_form_confirm_yn').val('n');
+							}
+						},
+						error : function(xr, status, error) {
+							alert("ajax error");
+						}
+					});
+				}
+			});
+			
 			$('#saleproduct_update_form_delete').on('click', function(){
 				var saleprocode = $('#saleproduct_update_form_saleprocode').val();
 				$('#saleproduct_update_form_myModal').modal('show');
@@ -176,8 +280,6 @@ $(document).ready(
 			.on(
 					'click',
 					function() {
-						// $('#buy_insert_form_searchvendcode').val();와
-						// 같은역할 대신 자신의 속한 옵션 등을 타고 들어갈 때 사용
 						var searchvendcode = $(
 								'#venderproductbuy_insert_form_searchvendercode')
 								.children('option:selected')

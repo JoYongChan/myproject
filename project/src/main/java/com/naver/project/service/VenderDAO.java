@@ -53,4 +53,6 @@ public interface VenderDAO {
 
 	void deleteVenderProduct(String venderproductcode);
 
+	int selectUsingVenderproductcode(String venderproductcode);
+
 }

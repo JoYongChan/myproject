@@ -62,11 +62,11 @@ public class VenderController {
 	@ResponseBody
 	@RequestMapping(value = "/venderConfirm", method = RequestMethod.POST)
 	public int venderConfirm(@RequestParam String vendercode) {
-		System.out.println("venderConfirm code : " + vendercode);
 		VenderDAO dao = sqlSession.getMapper(VenderDAO.class);
 		int exists = 0;
 		try {
 			exists = dao.selectUsingVendercode(vendercode);
+			System.out.println("venderConfirm exists : " + exists);
 		} catch (Exception e) {
 			System.out.println("confirm error : " + e.getMessage());
 		}
@@ -160,6 +160,20 @@ public class VenderController {
 		model.addAttribute("venders", venders);
 		model.addAttribute("products", products);
 		return "vender/venderproduct_insert_form";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/venderProductConfirm", method = RequestMethod.POST)
+	public int venderProductConfirm(@RequestParam String venderproductcode) {
+		VenderDAO dao = sqlSession.getMapper(VenderDAO.class);
+		int exists = 0;
+		try {
+			exists = dao.selectUsingVenderproductcode(venderproductcode);
+			System.out.println("venderConfirm exists : " + exists);
+		} catch (Exception e) {
+			System.out.println("confirm error : " + e.getMessage());
+		}
+		return exists;
 	}
 
 	@RequestMapping(value = "/venderproductInsert", method = RequestMethod.POST)
@@ -389,4 +403,5 @@ public class VenderController {
 		}
 		return "redirect:venderProductBuyInsertForm";
 	}
+
 }

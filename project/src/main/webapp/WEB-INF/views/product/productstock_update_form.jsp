@@ -10,8 +10,6 @@
 <body>
 	<form id="productstock_update_form" name="productstock_update_form"
 		method="post" action="productStockUpdate" data-parsley-validate="true">
-		<input type="hidden" id="productstock_update_form_confirm_yn"
-			value="n">
 		<h1 style="text-align: center">재고물품재고 등록</h1>
 		<input type="hidden" id="productstock_update_form_hiddenstockid" name="stockid" value="${productstock.stockid}">
 		<input type="hidden" id="productstock_update_form_hiddencurstock" value="${productstock.curstock}">

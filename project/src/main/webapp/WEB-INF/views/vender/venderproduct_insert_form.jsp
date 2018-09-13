@@ -116,13 +116,13 @@
 
 			<div class="row">
 				<div class="col-md-5"></div>
-				<button type="submit" id="venderproduct_insert_form_save"
+				<button type="button" id="venderproduct_insert_form_save"
 					class="col-md-1 btn btn-primary"
 					style="font-align: center; margin: 3px">저장</button>
 				<button type="button" class="col-md-1 btn btn-warning"
 					id="venderproduct_insert_form_cancel"
 					style="font-align: center; margin: 3px"
-					onclick="location.href='venderList'">취소</button>
+					onclick="location.href='venderproductList'">취소</button>
 				<div class="col-md-5"></div>
 			</div>
 

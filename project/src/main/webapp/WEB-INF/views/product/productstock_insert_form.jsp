@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- 각 필드들의 id로 지정된 것들은 jQuery와 JavaScript에서 인식하는데에 사용 -->
-	<!-- 컨트롤러에서는 name으로 매칭해서 사용 -->
 	<form id="productstock_insert_form" name="productstock_insert_form"
 		method="post" action="productStockInsert" data-parsley-validate="true">
 		<input type="hidden" id="productstock_insert_form_confirm_yn"

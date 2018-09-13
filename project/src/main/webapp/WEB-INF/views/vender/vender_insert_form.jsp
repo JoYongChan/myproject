@@ -267,7 +267,7 @@
 				<div class="col-md-5"></div>
 				<!-- submit을 type으로 지정하지 않고 버튼에 클릭에 따른 동작을 위의 Script에서 지정해서
 				submit 동작을 실행 -->
-				<button type="submit" id="vender_insert_form_save"
+				<button type="button" id="vender_insert_form_save"
 					class="col-md-1 btn btn-primary"
 					style="font-align: center; margin: 3px">저장</button>
 				<button type="button" class="col-md-1 btn btn-warning"
