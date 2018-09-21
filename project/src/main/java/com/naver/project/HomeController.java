@@ -25,7 +25,7 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
-		return "login/login";
+		return "home";
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)

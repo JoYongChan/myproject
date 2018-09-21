@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.project.service.CommentDao">
+  			<insert id="insertRow" parameterType="hashMap" >
+  			insert into comment
+			(c_code,b_code,content,writer,reg_date
+			)values(
+			(select ifnull(max(c_code)+1,1) from comment alias_seq),
+			#{b_code,jdbcType=INTEGER},#{content,jdbcType=VARCHAR},
+			#{writer,jdbcType=VARCHAR},#{reg_date,jdbcType=BINARY}
+			)
+  			</insert>
+  			<resultMap type="com.naver.project.entities.Comment" id="commentMap">
+			</resultMap>
+  				<select id="selectOne" parameterType="Integer" resultMap="commentMap">
+  					select * from comment where b_code=#{b_code}
+  				</select>
+  				<select id="selectUpdate" parameterType="Integer" resultMap="commentMap">
+  				select * from comment where c_code=#{c_code}
+  				</select>
+		  		<delete id="commentDelete" parameterType="Integer">
+				delete from comment  where c_code = #{c_code}
+	  			</delete>
+	  			
+ </mapper>

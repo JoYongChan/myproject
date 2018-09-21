@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,26 +16,10 @@
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
 			href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
 			aria-haspopup="true" aria-expanded="false"> <i
-				class="fas fa-fw fa-folder"></i> <span>페이지</span>
-		</a>
-			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-				<h6 class="dropdown-header">Login Screens:</h6>
-				<a class="dropdown-item" href="login.html">Login</a> <a
-					class="dropdown-item" href="register.html">Register</a> <a
-					class="dropdown-item" href="forgot-password.html">Forgot
-					Password</a>
-				<div class="dropdown-divider"></div>
-				<h6 class="dropdown-header">Other Pages:</h6>
-				<a class="dropdown-item" href="404.html">404 Page</a> <a
-					class="dropdown-item" href="blank.html">Blank Page</a>
-			</div></li>
-		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
-			href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
-			aria-haspopup="true" aria-expanded="false"> <i
 				class="fas fa-fw fa-folder"></i> <span>게시판</span>
 		</a>
 			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-				<a class="dropdown-item" href="boardListForm">게시판</a>
+				<a class="dropdown-item" href="boardPageList">게시판</a>
 			</div></li>
 		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
 			href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
@@ -72,24 +57,50 @@
 			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 				<a class="dropdown-item" href="saleproductList">판매물품 관리</a>
 			</div></li>
-		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
-			href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
-			aria-haspopup="true" aria-expanded="false"> <i
-				class="fas fa-fw fa-folder"></i> <span>직원관리</span>
-		</a>
-			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-				<a class="dropdown-item" href="employeeInsertForm">직원 등록</a> <a
-					class="dropdown-item" href="#">직원 리스트</a>
-			</div></li>
-		<li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
-			href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
-			aria-haspopup="true" aria-expanded="false"> <i
-				class="fas fa-fw fa-folder"></i> <span>마감</span>
-		</a>
-			<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-				<a class="dropdown-item" href="closeForm">마감</a>
-			</div></li>
-		
+			<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle"	href="#" id="pagesDropdown" 
+					role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false"> 
+					<i class="fas fa-fw fa-folder"></i> <span>직원관리</span>
+					</a>
+				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+				<c:choose>
+					<c:when test="${sessionstorecode ==null}">
+						<label>&nbsp관리자계정 로그인 시 </label>
+						<label>&nbsp확인 가능합니다.</label>
+					</c:when>
+					<c:otherwise>
+						<a class="dropdown-item" href="employeeInsertForm">직원 등록</a> 
+						<a class="dropdown-item" href="employeeListForm">직원 리스트</a>
+						<a class="dropdown-item" href="employeeSalaryForm">직원 급여등록</a>
+						<a class="dropdown-item" href="employeeSalaryListForm">직원 급여리스트</a>
+						<a class="dropdown-item" href="employeeSalaryTaxForm">직원 급여 월별 계산</a>
+						<a class="dropdown-item" href="employeeSalaryTaxListForm">직원 급여 월별 리스트</a>
+						<a class="dropdown-item" href="employeeCommuteInsertForm">직원 근태등록</a>
+						<a class="dropdown-item" href="employeeCommuteListForm">직원 근태기록</a>
+					</c:otherwise>
+				</c:choose>
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle"	href="#" id="pagesDropdown" 
+					role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false"> 
+					<i class="fas fa-fw fa-folder"></i> <span>매장관리</span>
+					</a>
+				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
+				<c:choose>
+					<c:when test="${sessionstorecode ==null}">
+						<label>&nbsp관리자계정 로그인 시 </label>
+						<label>&nbsp확인 가능합니다.</label>
+						<a class="dropdown-item" href="tableSelect">테이블관리</a>
+					</c:when>
+					<c:otherwise>
+						<a class="dropdown-item" href="tableAccount">테이블계정 등록</a> 
+						<a class="dropdown-item" href="tableListForm">테이블계정 리스트</a> 
+						<a class="dropdown-item" href="storeListForm">매장 리스트</a> 
+					</c:otherwise>
+				</c:choose>
+				</div>
+			</li>
 	</ul>
 	</nav>
 </body>

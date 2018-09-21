@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 @Component
 public class Product {
-	private String procode;
-	private String proname;
-	private String capacity;
+	private String procode,code,proname,memo,photo,category,capacity;	
+	private int price;
 }

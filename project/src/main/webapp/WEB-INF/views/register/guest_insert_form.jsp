@@ -13,8 +13,7 @@
 </script>
 <body >
 	<form name="guest_insert_form" id="guest_insert_form" method="post"
-		action="guestInsert" data-parsley-validate="true" 
-		enctype="multipart/form-data">
+		action="guestInsert" data-parsley-validate="true">
 		<h1 style="text-align: center">회원가입</h1>
 		<div class="container" style="margin-top: 20px">
 		<!-- name -->
@@ -27,7 +26,15 @@
 					</div>
 					<input type="text" name="name" class="form-control"
 						placeholder="name" aria-label="Username"
-						aria-describedby="basic-addon1">
+						aria-describedby="basic-addon1"
+						required="true" data-parsley-error-message="이름을 입력하세요!"
+						data-parsley-errors-container="div[id='nameError']" >
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3"></div>
+				<div class="col-md-6">
+					<div id="nameError" style="color: #f00"></div>
 				</div>
 			</div>
 			<!-- password -->
@@ -130,20 +137,13 @@
 					<input name="phone2" type="text" class="form-control"
 						maxlength="4" placeholder="phone" aria-label="Phone2"
 						data-parsley-type="number" required="true"
-						data-parsley-error-message="숫자만 입력하세요!"
-						aria-describedby="basic-addon1" onkeyup="phone2_lengthchk(this)"
-						data-parsley-errors-container="div[id='phoneError']" /> <label>-</label>
+						aria-describedby="basic-addon1" onkeyup="removeChar(event);phone2_lengthchk(this)"onkeydown='return onlyNumber(event)' 
+						/> 
+						<label>-</label>
 					<input name="phone3" type="text" maxlength="4" required="true"
-						data-parsley-error-message="숫자만 입력하세요!" class="form-control"
-						placeholder="phone" aria-label="phone3" data-parsley-type="number"
-						aria-describedby="basic-addon1"
-						data-parsley-errors-container="div[id='phoneError']" />
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3"></div>
-				<div class="col-md-6">
-					<div id="phoneError" style="color: #f00"></div>
+						class="form-control"placeholder="phone" aria-label="phone3" 
+						aria-describedby="basic-addon1" onkeyup="removeChar(event)"onkeydown='return onlyNumber(event)' 
+						/>
 				</div>
 			</div>
 			<!-- postno -->
@@ -158,7 +158,7 @@
 						placeholder="우편번호" aria-label="Postno"
 						aria-describedby="basic-addon1">
 					<button type="button" class="btn btn-primary"
-						onclick="findAddr()" value="우편번호 찾기">찾기</button>
+						onclick="ZipcodeFind()" value="우편번호 찾기">찾기</button>
 				</div>
 			</div>
 			<span id="guide" style="color: #999"></span>
@@ -170,7 +170,7 @@
 						<span class="input-group-text" style="width: 135px;background-color:#BDBDBD"> <i
 							class="fas fa-home" style="font-size: 30">신주소</i></span>
 					</div>
-					<input id="addr1" name="addr1" type="text" class="form-control"
+					<input id="newaddr" name="addr1" type="text" class="form-control"
 						placeholder="주소" aria-label="addr1"
 						aria-describedby="basic-addon1">
 				</div>
@@ -182,7 +182,7 @@
 						<span class="input-group-text" style="width: 135px;background-color:#BDBDBD"><i
 							class="fas fa-home" style="font-size: 30">구주소</i></span>
 					</div>
-					<input id="addr2" name="addr2" type="text" class="form-control"
+					<input id="oldaddr" name="addr2" type="text" class="form-control"
 						placeholder="주소" aria-label="addr2"
 						aria-describedby="basic-addon1">
 				</div>
@@ -202,10 +202,10 @@
 
 			</div>
 			<!-- save cancel -->
-			<div class="row">
+			<div class="row" style="margin-bottom: 100px">
 				<div class="col-md-5"></div>
 				<div class="col-md-1">
-					<button type="button" id="member_insert_form_save" class="btn btn-success save save">저장</button>
+					<button type="button" id="guset_insert_form_save" class="btn btn-success save save">저장</button>
 				</div>
 				<div class="col-md-1">
 					<button type="button" class="btn btn-danger"
@@ -215,7 +215,7 @@
 			</div>
 
 			<!-- Modal -->
-			<div id="member_insert_form_myModal" class="modal fade" role="dialog">
+			<div id="guest_insert_form_myModal" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 
 					<!-- Modal content-->

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.project.service.TableaccountDAO">
+	<resultMap type="com.naver.project.entities.Tableaccount" id="tableaccountMap">
+	</resultMap>
+	
+	<insert id="insertRow" parameterType="HashMap">
+		insert into tableaccount(tablecode,tablepass,storecode
+		)values(
+		#{tablecode,jdbcType=VARCHAR},
+		#{tablepass,jdbcType=VARCHAR},
+		#{storecode,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="selecttableConfirm" parameterType="String" resultType="int">
+		select count(*) from tableaccount where tablecode=#{tablecode}
+	</select>
+
+	<select id="selectAll" resultMap="tableaccountMap">
+		select * from tableaccount
+	</select>	
+	
+	<select id="selectOne" parameterType="String" resultMap="tableaccountMap">
+  		select * from tableaccount where tablecode=#{tablecode}
+  	</select>
+  	
+  	<update id="updateRow" parameterType="HashMap">
+  		update tableaccount set 
+  		tablecode=#{tablecode,jdbcType=VARCHAR},
+  		tablepass=#{tablepass,jdbcType=VARCHAR},
+  		storecode=#{storecode,jdbcType=VARCHAR}
+		where tablecode=#{tablecode}
+  	</update>
+  	
+  	<delete id="deleteRow" parameterType="String">
+  		delete from tableaccount where tablecode=#{tablecode}
+  	</delete>
+  	
+  	<select id="tableLogin" parameterType="hashMap" resultMap="tableaccountMap">
+  		select * from tableaccount where tablecode=#{tablecode} and tablepass=#{tablepass}	
+  	</select>
+  	
+ </mapper>

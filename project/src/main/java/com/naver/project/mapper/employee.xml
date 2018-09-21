@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.project.service.EmployeeDAO">
+	<resultMap type="com.naver.project.entities.Employee" id="employeeMap">
+	</resultMap>
+	
+	<select id="selectEmpConfirm" parameterType="String" resultType="int">
+   		select count(*) from employee where empcode=#{empcode}
+	</select>
+	
+	<insert id="insertRow" parameterType="HashMap">
+		insert into employee(empcode,name,age,gender,postno,newaddr,
+		oldaddr,detailaddr,phone,photo,birthday,hiredate,memlevel,storename
+		)values(
+		#{empcode,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{age,jdbcType=INTEGER},
+		#{gender,jdbcType=VARCHAR},
+		#{postno,jdbcType=VARCHAR},
+		#{newaddr,jdbcType=VARCHAR},
+		#{oldaddr,jdbcType=VARCHAR},
+		#{detailaddr,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{photo,jdbcType=VARCHAR},
+		#{birthday,jdbcType=VARCHAR},
+		#{hiredate,jdbcType=VARCHAR},
+		#{memlevel,jdbcType=INTEGER},
+		#{storename,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="selectAll" resultMap="employeeMap">
+  		select * from employee
+  	</select>
+  	
+  	<select id="selectOne" parameterType="String" resultMap="employeeMap">
+  		select * from employee where empcode=#{empcode}
+  	</select>
+  	
+  	<update id="updateRow" parameterType="HashMap">
+  		update employee set
+  		empcode=#{empcode,jdbcType=VARCHAR},
+  		name=#{name,jdbcType=VARCHAR},
+  		age=#{age,jdbcType=INTEGER},
+  		gender=#{gender,jdbcType=VARCHAR},
+  		postno=#{postno,jdbcType=VARCHAR},
+  		newaddr=#{newaddr,jdbcType=VARCHAR},
+  		oldaddr=#{oldaddr,jdbcType=VARCHAR},
+  		detailaddr=#{detailaddr,jdbcType=VARCHAR},
+  		phone=#{phone,jdbcType=VARCHAR},
+  		photo=#{photo,jdbcType=VARCHAR},
+  		birthday=#{birthday,jdbcType=VARCHAR},
+  		hiredate=#{hiredate,jdbcType=VARCHAR},
+  		memlevel=#{memlevel,jdbcType=INTEGER},
+  		storename=#{storename,jdbcType=VARCHAR}
+  		where empcode=#{empcode}
+  	</update>
+	
+	<delete id="deleteRow" parameterType="HashMap">
+		delete from employee where empcode=#{empcode}
+	</delete>
+	
+ </mapper>

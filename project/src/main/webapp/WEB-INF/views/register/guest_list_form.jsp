@@ -36,17 +36,17 @@
 						<th>포인트</th>
 					</tr>
 				</thead>
-				<c:forEach var="balance" items="${balances}" varStatus="status">
+				<c:forEach var="guset" items="${gusets}" varStatus="status">
 					<tr>
-						<td style="text-align: ceter; vertical-align: middle:">${balance.yyyy}</td>
-						<td style="text-align: ceter; vertical-align: middle;"><a
-							href="balanceUpdateForm?yyyy=${balance.yyyy}&vendcode=${balance.vendcode}">${balance.vendname}</a></td>
-						<td style="text-align: ceter; vertical-align: middle:">${balance.preyybalance}</td>
-						<td style="text-align: ceter; vertical-align: middle:">${balance.dealtot}</td>
-						<td style="text-align: ceter; vertical-align: middle:">${balance.cashtot}</td>
-						<td style="text-align: ceter; vertical-align: middle:">${balance.checktot}</td>
-						<td style="text-align: ceter; vertical-align: middle:">${balance.cardtot}</td>
-						<td style="text-align: ceter; vertical-align: middle:">${balance.etctot}</td>
+						<td style="text-align: ceter; vertical-align: middle:">${guset.name}</td>
+						<td style="text-align: ceter; vertical-align: middle;">${guset.birthday}</td>
+						<td style="text-align: ceter; vertical-align: middle:">${guset.gender}</td>
+						<td style="text-align: ceter; vertical-align: middle:"><a
+							href="gusetUpdateForm?phone=${guset.phone}&birthday=${guset.birthday}">${guset.phone}</a></td>
+						<td style="text-align: ceter; vertical-align: middle:">${guset.postno}</td>
+						<td style="text-align: ceter; vertical-align: middle:">${guset.addr1}${guset.addr2}${guset.addr3}</td>
+						<td style="text-align: ceter; vertical-align: middle:">${guset.inputdate}</td>
+						<td style="text-align: ceter; vertical-align: middle:">${guset.point}</td>
 					</tr>
 				</c:forEach>
 			</table>

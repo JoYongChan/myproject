@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.project.service.SalaryDAO">
+	<resultMap type="com.naver.project.entities.Salary" id="salaryMap"> 
+	</resultMap>
+	<resultMap type="com.naver.project.entities.Salaryroll" id="salaryRollMap"> 
+	</resultMap>
+	
+	<insert id="insertSalaryRow" parameterType="HashMap">
+		insert into salary(empcode,partner,dependent20,dependent60,disabled,
+		womanpower,pay,extra,yn,name,gender,age,hiredate,memlevel
+		)values(
+		#{empcode,jdbcType=VARCHAR},
+		#{partner,jdbcType=INTEGER},
+		#{dependent20,jdbcType=INTEGER},
+		#{dependent60,jdbcType=INTEGER},
+		#{disabled,jdbcType=INTEGER},
+		#{womanpower,jdbcType=INTEGER},
+		#{pay,jdbcType=INTEGER},
+		#{extra,jdbcType=INTEGER},
+		#{yn,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{gender,jdbcType=VARCHAR},
+		#{age,jdbcType=INTEGER},
+		#{hiredate,jdbcType=VARCHAR},
+		#{memlevel,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<select id="selectSalaryAll" resultMap="salaryMap">
+  		select * from salary
+  	</select>
+  	
+	<select id="selectyn" resultMap="salaryMap">
+  		select * from salary where yn='y'
+  	</select>
+  	
+  	<select id="selectOne" parameterType="String" resultMap="salaryMap">
+  		select * from salary where empcode=#{empcode}
+  	</select>
+  	
+  	<update id="updateSalaryRow" parameterType="HashMap">
+  		update salary set
+  		empcode=#{empcode,jdbcType=VARCHAR},
+  		name=#{name,jdbcType=VARCHAR},
+  		age=#{age,jdbcType=INTEGER},
+  		gender=#{gender,jdbcType=VARCHAR},
+  		hiredate=#{hiredate,jdbcType=VARCHAR},
+  		partner=#{partner,jdbcType=INTEGER},
+  		dependent20=#{dependent20,jdbcType=INTEGER},
+  		dependent60=#{dependent60,jdbcType=INTEGER},
+  		disabled=#{disabled,jdbcType=INTEGER},
+  		womanpower=#{womanpower,jdbcType=INTEGER},
+  		pay=#{pay,jdbcType=INTEGER},
+  		extra=#{extra,jdbcType=INTEGER},
+  		yn=#{yn,jdbcType=VARCHAR},
+  		memlevel=#{memlevel,jdbcType=VARCHAR}
+  		where empcode=#{empcode}
+  	</update>
+  	
+  	<delete id="deleteSalaryRow" parameterType="hashMap">
+  		delete from salary where empcode=#{empcode}
+  	</delete>
+	
+  	<delete id="salaryDelete" parameterType="hashMap">
+  		delete from salary where empcode=#{empcode}
+  	</delete>
+  	
+  	<insert id="insertSalaryrollRow" parameterType="hashMap">
+  		insert into salaryroll(yyyy,mm,empcode,name,partner,dependent20,
+  		dependent60,disabled,womanpower,pay12,totalpay
+		) values(
+		#{yyyy,jdbcType=VARCHAR},
+		#{mm,jdbcType=VARCHAR},
+		#{empcode,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{partner,jdbcType=INTEGER},
+		#{dependent20,jdbcType=INTEGER},
+		#{dependent60,jdbcType=INTEGER},
+		#{disabled,jdbcType=INTEGER},
+		#{womanpower,jdbcType=INTEGER},
+		#{pay12,jdbcType=INTEGER},
+		#{totalpay,jdbcType=INTEGER}
+		)
+  	</insert>
+	
+  	<delete id="salaryrollDelete" parameterType="hashMap">
+		delete from salaryroll where yyyy=#{yyyy} and mm=#{mm}
+	</delete>
+	
+	<select id="SalaryRollList" parameterType="hashMap" resultMap="salaryRollMap">
+  		select * from salaryroll where 
+  		yyyy =#{yyyy} and mm =#{mm}
+  	</select>
+	
+ </mapper>

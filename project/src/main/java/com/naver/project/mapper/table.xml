@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.project.service.TableDAO">
+	
+	<resultMap type="com.naver.project.entities.Table" id="tableMap">
+	</resultMap>
+	
+	<resultMap type="com.naver.project.entities.Product" id="productMap">
+	</resultMap>
+	
+	<select id="selectSequenceNo" parameterType="hashMap" resultType="Integer">
+	select ifnull(max(no),1) from test4table 
+	where yyyy=#{yyyy} and mm=#{mm} and dd=#{dd} and tableno=#{tableno}
+	</select>
+	
+	<select id="selectProductCategory" parameterType="hashMap" resultType="String">
+	select distinct category from test4product
+	</select>
+	
+	<select id="selectProduct" parameterType="hashMap" resultMap="productMap">
+	select proname,price,memo from test4product 
+	where category=#{category}
+	</select>
+	
+	<select id="selectProductOrder" parameterType="hashMap" resultMap="tableMap">
+	select seq,proname,price,qty,sum,orderChk,tableno from test4table 
+	where tableno=#{tableno} and complete=0 
+	</select>
+	
+	<insert id="insertTable" parameterType="hashMap" >
+   
+   	insert into test4table(
+   	seq,proname,tableno,yyyy,mm,dd,no,price,qty,sum
+   	)values(
+   	
+   	( select ifnull(MAX(seq)+1,1) from test4table alias_test4table),#{proname,jdbcType=VARCHAR},
+   	
+   	#{tableno,jdbcType=INTEGER},
+   	
+   	#{yyyy,jdbcType=VARCHAR},#{mm,jdbcType=VARCHAR},#{dd,jdbcType=VARCHAR},#{no,jdbcType=INTEGER},
+   	
+   	#{price,jdbcType=INTEGER},#{qty,jdbcType=INTEGER},#{sum,jdbcType=INTEGER}
+   	
+   	)
+   	
+   </insert>
+   
+   <update id="insertTableOrder" parameterType="hashMap" >
+   	update test4table as t
+   	cross join
+   			( select max(ordernum) as max_number
+   				from test4table
+   			)as m
+   	set t.ordernum=m.max_number+1,
+	t.orderchk=1
+	
+	where seq=#{seq} and orderchk=0
+	
+   </update>
+   
+   <select id="selectTable" parameterType="hashMap" resultMap="tableMap">
+	select ordernum,proname,price,qty,sum,tableno from test4table 
+	where orderchk=1 and complete=0 
+	order by ordernum 
+	</select>
+   
+   <update id="completeTableOrder" parameterType="hashMap" >
+	update test4table 
+   	set ordernum=0,
+	complete=1
+	where tableno=#{tableno} and orderchk=1
+	</update>
+	
+ </mapper>

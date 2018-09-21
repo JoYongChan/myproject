@@ -1,0 +1,21 @@
+alter user scott temporary tablespace scotttmp;
+select tablespace_name from user_tablespaces;
+create table dept (code char(4), name varchar(10));
+select table_name,tablespace_name from user_tables;
+drop user scott cascade;
+drop tablespace scotttsp;
+select table_name from user_tables;
+commit;
+rollback;
+flashback table member to before drop;
+select * from recyclebin;
+select count(*) from member;
+savepoint A;
+rollback to savepoint b;
+insert into member values('kor','korea','010-111-1');
+select * from member;
+delete from member;
+commit;
+rollback;
+alter table member change phone phone varchar(20) default '010' not null;
+

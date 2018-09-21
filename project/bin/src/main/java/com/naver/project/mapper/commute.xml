@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.naver.project.service.CommuteDAO">
+	<resultMap id="commuteMap" type="com.naver.project.entities.Commute"> </resultMap>
+
+	<insert id="insertRow" parameterType="HashMap">
+		insert into commute(empcode,commutedate,attendancetime,leaveworktime,attendancetype, leaveworktype,statetype,memo,yyyy,mm,dd 
+		)values(
+		#{empcode,jdbcType=VARCHAR},
+		#{commutedate,jdbcType=VARCHAR},
+		#{attendancetime,jdbcType=VARCHAR},
+		#{leaveworktime,jdbcType=VARCHAR},
+		#{attendancetype,jdbcType=INTEGER},
+		#{leaveworktype,jdbcType=INTEGER},
+		#{statetype,jdbcType=INTEGER},
+		#{memo,jdbcType=VARCHAR},
+		#{yyyy,jdbcType=VARCHAR},
+		#{mm,jdbcType=VARCHAR},
+		#{dd,jdbcType=VARCHAR}
+		)
+ 	</insert>
+
+	<select id="selectAll" resultMap="commuteMap">
+		 select * from commute
+	</select>
+	
+	<select id="selectCommutes" parameterType="String"  resultMap="commuteMap">
+		 select * from commute where empcode=#{empcode}
+	</select>
+
+	<select id="selectOne" parameterType="String" resultMap="commuteMap">
+		select * from commute where empcode=#{empcode} and commutedate=#{commutedate}
+	</select>
+
+	<update id="updateRow" parameterType="HashMap">
+		update commute set empcode=#{empcode,jdbcType=VARCHAR},
+		commutedate=#{commutedate,jdbcType=VARCHAR},
+		attendancetime=#{attendancetime,jdbcType=INTEGER},
+		leaveworktime=#{leaveworktime,jdbcType=VARCHAR}, 
+		attendancetype=#{attendancetype,jdbcType=INTEGER}, 
+		leaveworktype=#{leaveworktype,jdbcType=INTEGER},
+		statetype=#{statetype,jdbcType=INTEGER},
+		memo=#{memo,jdbcType=VARCHAR},
+		yyyy=#{yyyy,jdbcType=VARCHAR},
+		mm=#{mm,jdbcType=VARCHAR},
+		dd=#{dd,jdbcType=VARCHAR}
+		where empcode=#{empcode} and commutedate=#{commutedate}
+	</update>
+
+	<delete id="deleteRow" parameterType="HashMap">
+		delete from commute where empcode=#{empcode} and commutedate=#{commutedate}
+	</delete>
+	
+ 	<delete id="commuteDelete" parameterType="HashMap">
+		delete from commute where empcode=#{empcode} and commutedate=#{commutedate}
+	</delete>
+	
+	<select id="selectCount" resultType="int" parameterType="String">
+		select count(*) from commute where empcode=#{empcode}
+	</select>
+	
+ </mapper>

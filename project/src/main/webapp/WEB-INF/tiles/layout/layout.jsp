@@ -6,6 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<!-- CKEDIT-->
+<script src="resources/ckeditor/ckeditor.js"></script>
 <!-- Bootstrap core CSS-->
 <link href="resources/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -37,6 +39,26 @@
 			<tiles:insertAttribute name="footer" />
 		</div>
 	</div>
+	
+	 <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">로그아웃 버튼을 클릭하면 로그아웃됩니다.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="logout" id="logout1">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	
 </body>
 
 <!-- Bootstrap core JavaScript-->
@@ -54,10 +76,13 @@
 <script src="resources/js/demo/datatables-demo.js"></script>
 <script src="resources/js/demo/chart-area-demo.js"></script>
 <script src="resources/js/myquery.js"></script>
+<script src="resources/js/tablequery.js"></script>
 <!--우편번호 	 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script><script charset="UTF-8" type="text/javascript" src="http://t1.daumcdn.net/postcode/api/core/180619/1529384927473/180619.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script><script charset="UTF-8" type="text/javascript" src="http://t1.daumcdn.net/postcode/api/core/180619/1529384927473/180619.js"></script>
 <!--autoload=false 파라미터를 이용하여 자동으로 로딩되는 것을 막습니다.-->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+<!-- parsley -->
+<script src="resources/js/parsley.min.js"></script>
 
 </html>

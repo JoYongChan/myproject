@@ -18,28 +18,42 @@
 	type="text/css">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin.css" rel="stylesheet">
+<style>
+body{ 
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.bgimg {
+    border: 0;
+    padding: 0; 
+    background-image: url('resources/img/restaurant5.jpg');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+</style>
 <title>Insert title here</title>
 </head>
-<body class="bg-dark">
+<body class="bgimg">
+<form  id="login_form" name="login_form" method="post" action="login" data-parsley-validate="true">
 	<div class="container">
       <div class="card card-login mx-auto mt-5">
         <div class="card-header">Login</div>
         <div class="card-body">
           <form>
             <div class="form-group">
-                <input type="text" id="inputEmail" class="form-control" placeholder="code" required="required" autofocus="autofocus">
+                <input type="text" id="code" name="storecode" class="form-control" placeholder="code" required="required" autofocus="autofocus">
             </div>
             <div class="form-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                <input type="password" id="password" name="storepass" class="form-control" placeholder="Password" required="required">
             </div>
             <div class="form-group">
             </div>
-            <a class="btn btn-primary btn-block" href="home">매장관리자 Login</a>
-            <a class="btn btn-primary btn-block" href="home">테이블계정 Login</a>
+            <button  id="login_btn" name="login_btn"  type="submit" class="btn btn-primary save" style="width: 360px"> Admin Login </button>
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="storeAdmin">매장 관리자 계정 생성</a>
-            <a class="d-block small" href="tableAccount">테이블 계정 생성</a>
           </div>
         </div>
       </div>
@@ -52,5 +66,6 @@
 
 	<!-- Core plugin JavaScript-->
 	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	</form>
 </body>
 </html>
